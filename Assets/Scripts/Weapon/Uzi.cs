@@ -5,8 +5,15 @@ public class Uzi : Weapon
 {
     [SerializeField] private int _burstShootCount;
 
-    private WaitForSeconds _burstDelay = new WaitForSeconds(0.2f);
+    private WaitForSeconds _waitForTime;
     private Coroutine _coroutine;
+
+    private float _burstDelay = 0.2f;
+
+    private void Awake()
+    {
+        _waitForTime = new WaitForSeconds(_burstDelay);
+    }
 
     public override void Shoot(Transform shootPoint)
     {
@@ -21,7 +28,7 @@ public class Uzi : Weapon
         for (int i = 0; i < _burstShootCount; i++)
         {
             Instantiate(Bullet, shootPoint.position, Quaternion.identity);
-            yield return _burstDelay;
+            yield return _waitForTime;
         }
     }
 }
